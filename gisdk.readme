@@ -1,0 +1,158 @@
+gisdk.readme for Vim version 6.1 and GISDK for TransCAD version 4.0.
+
+
+INTRODUCTION
+
+This is a brief readme file for GISDK syntax files for Vim. GISDK is a
+script language for GIS (Geographical Information Systems) software
+produced by Caliper -- more details can be found at:
+
+http://www.caliper.com
+
+For a long time I have developed in GISDK (in TransCAD). One of the
+greatest difficulties in this task was the lack of an appropriate
+development environment. Caliper finally decided to release a debugger, and
+things got a lot easier. However, one of the main activities is to _code_ a
+GISDK program, and for this purpose there is no consensus among the GISDK
+community concerning an editor.
+
+Many developers use good proprietary editors; others don't even use a
+programming oriented editor, with highly desirable features like syntax
+highlighting, auto completion and function tagging, not to mention basics
+like line and column numbering. Fortunately, GISDK syntax resembles C
+syntax, and many editors can be used.
+
+I believe Vim to be the best editor (actually, *the* editor), mainly due to
+its incredible flexibility, portability and power. It is an efficient full
+featured programming editor. Besides this, it is distributed free as
+charityware. Information can be found at:
+
+http://www.vim.org
+
+The GISDK syntax file for Vim was born as an effort to extend the
+great advantages of using Vim to all GISDK developers. I hope that any
+GISDK developer could profit from this contribution -- even if it is only
+to have fun. Enjoy it! :)
+
+Unfortunately, this short readme is the only documentation available (and
+necessary, I hope). Also, since I don't expect to develop in GISDK for a
+long time, I do not intend to maintain this syntax script (unless I save
+some spare time in the future).
+
+
+INSTALLATION
+
+The installation is pretty straightforward. There are four files in this
+distribution:
+
+- gisdk.vim: vim syntax script. The main file.
+- gisdk_ftp.vim: a simple plugin file.
+- gisdk.dict: a dictionary file used for function name completion,
+  according to GISDK for TransCAD v4.0 manual.
+- gisdk.readme: this readme.
+
+To install, just copy gisdk.vim to the *syntax* folder under your Vim
+runtime folder (usually C:\Vim\vimXX\syntax under win32 systems, where
+XX is your version). Put gisdk.dict and gisdk_ftp.vim in the *ftpplugin*
+folder and rename gisdk_ftp.vim to gisdk.vim.
+
+For GISDK resource files -- i.e. with extension *rsc* -- to be recognized
+as such by Vim, edit *filetype.vim* in the Vim runtime folder. Add the
+following two lines so that the correct syntax is loaded when opening a
+rsc file:
+
+" GISDK
+au BufNewFile,BufRead *.rsc			setf gisdk
+
+Usually, these lines fit better in a good alphabetical order. In my
+filetype.vim file, they should go between Gedcom and GP commands; that is,
+my file looked like that after inserting the lines:
+
+" Gedcom
+au BufNewFile,BufRead *.ged			setf gedcom
+
+" GISDK
+au BufNewFile,BufRead *.rsc			setf gisdk
+
+" GP scripts (2.0 and onward)
+au BufNewFile,BufRead *.gp			setf gp
+
+That's it. As an optional final step, you could also add GISDK to the
+syntax menu in GUI version of Vim. Edit *menu.vim* in the runtime folder
+and the following line also between Gedcom and GP definitions:
+
+an 50.30.320 &Syntax.EFG.GISDK :cal SetSyn("gisdk")
+         ^^^
+		 
+Be careful to also modify the menu numbers, as I tag above. A little
+excerpt from my file after the modification:
+
+an 50.30.310 &Syntax.EFG.Gedcom :cal SetSyn("gedcom")
+an 50.30.320 &Syntax.EFG.GISDK :cal SetSyn("gisdk")
+an 50.30.330 &Syntax.EFG.GP :cal SetSyn("gp")
+an 50.30.340 &Syntax.EFG.GNU\ Server\ Pages :cal SetSyn("gsp")
+an 50.30.350 &Syntax.EFG.GNUplot :cal SetSyn("gnuplot")
+an 50.30.360 &Syntax.EFG.Groff :cal SetSyn("groff")
+an 50.30.370 &Syntax.EFG.GTKrc :cal SetSyn("gtkrc")
+
+You should start benefitting from the beautiful highlighting by the time you
+open a GISDK resource file. To use function completion, use Ctrl+P and
+Ctrl+N to navigate through the completion options. For instance, if you
+type *GetN* and press Ctrl+N you get GetNetworkInfo, while pressing Ctrl+P
+from *GetNe* will give you GetNextRecord.
+
+Another useful feature is function tagging, or better, Macro and Dbox
+tagging, since we're dealing with GISDK. Tagging is specially useful when
+dealing with large files, since it will enable you to jump along the code
+to check or edit Macro and DBox definitions. We need an external program
+for this purpose: ctags. It can be found at:
+
+http://ctags.sourceforge.net
+
+Put ctags.exe in any place your path can find it. In order to generate the
+tags for your file, go to a command prompt and issue:
+
+ctags -c "/^\(macro\|dbox\)[ \t]*\"\([a-zA-Z0-9_]*\)\"/\2/" file.rsc
+
+This should create a file called *tags*. Vim uses this file to search for
+the tags. To use the tagging utility, put the cursor over the name of a
+macro in a command RunMacro("Macro_name") -- in this case, Macro_name,
+obviously -- and press Ctrl+]. You should be directed to the definition
+line of Macro_name. To come back to where you were, just press Ctrl+T. The
+same works with Dboxes. There is only one restriction for using tags: the
+names of the macros/dboxes should _not_ contain spaces. Use underscores (_)
+instead.
+
+As a final remark, I highly suggest a visit to the Vim site. There many
+useful scripts can be found, varying from color themes to utilities
+like tag browsers.
+
+
+COPYING & UPDATING
+
+I hope that many GISDK developers could make good use of this syntax file.
+Since I'd like each and every developer to profit from this Vim script,
+there's no sense in restricting copy and update. So, anybody is free to
+copy and update the code. I would only appreciate a lot if
+any useful updates could be sent to me; or even my name being cited
+somewhere as a contributer. :)
+
+
+TODO
+
+I think that one nice feature in this package would be an integration
+between Vim and the GISDK compiler, rscc. By this I mean compiling from
+Vim -- even with separate compilation, that is, source code in separate
+files -- and checking error messages. A deeper integration, allowing to
+debug using Vim would be fantastic (maybe through GDB?). But since it would
+depend in an interaction with Caliper, I think it is almost impossible. :)
+
+
+AUTHOR
+
+Comments, suggestions and updates are welcome and can be sent to:
+
+Luis Carvalho
+lexcarvalho@hotmail.com
+ICQ# 13599422 (Kozure)
+

@@ -1,0 +1,10 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=613
+
+GISDK is a script language for GIS (Geographical Information Systems) software produced by Caliper. This script intends to profit from the programming editing capabilities of Vim to provide features for developing programs in GISDK, like syntax highlighting, auto completion and tagging. More information can be found in gisdk.readme.
+
+For the more curious, some screenshots are available at:
+http://carvalho.webhop.net/gisdk_vim1.png
+http://carvalho.webhop.net/gisdk_vim2.png
+http://carvalho.webhop.net/gisdk_vim3..png
+
+Have fun! :)
